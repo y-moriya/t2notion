@@ -70,7 +70,7 @@ const createNotionTask = async (taskData: TaskData) => {
     },
   });
 
-  console.log(newPage);
+  return newPage;
 };
 
 const app = new Hono();
@@ -78,9 +78,10 @@ const app = new Hono();
 app.post("/", async (c) => {
   const taskData = await getTaskData(c.req);
   console.log(taskData);
-  await createNotionTask(taskData);
+  const newPage = await createNotionTask(taskData);
+  console.log(newPage);
 
-  return c.text("Hello Hono!");
+  return c.json({ result: "ok" }, 200);
 });
 
 Deno.serve(app.fetch);
