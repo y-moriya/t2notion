@@ -4,7 +4,6 @@ import { Client } from "npm:@notionhq/client";
 import "https://deno.land/std@0.203.0/dotenv/load.ts";
 
 interface TaskData {
-  completed_at: string;
   content: string;
   parent_id: string;
   parent?: string;
@@ -61,8 +60,7 @@ const createNotionTask = async (taskData: TaskData) => {
       Date: {
         type: "date",
         date: {
-          start: taskData.completed_at,
-          time_zone: "UTC",
+          start: new Date().toISOString(),
         },
       },
       URL: {
